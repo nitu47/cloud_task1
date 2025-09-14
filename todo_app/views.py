@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Task
 from .forms import TaskForm
 
@@ -24,8 +24,20 @@ def add_task(request):
         form = TaskForm()
     return render(request, 'todo_app/add_task.html', {'form': form})
 
+def edit_task(request, task_id):
+    task = get_object_or_404(Task, id=task_id)  # safely fetch the task
+    if request.method == "POST":
+        form = TaskForm(request.POST, instance=task)  # bind form to existing task
+        if form.is_valid():
+            form.save()
+            save_tasks_to_file()
+            return redirect('task_list')
+    else:
+        form = TaskForm(instance=task)  # pre-fill with existing data
+    return render(request, 'todo_app/edit_task.html', {'form': form})
+
 def delete_task(request, task_id):
-    task = Task.objects.get(id=task_id)
+    task = get_object_or_404(Task, id=task_id)  # safer than Task.objects.get
     task.delete()
     save_tasks_to_file()
     return redirect('task_list')

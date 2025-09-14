@@ -1,7 +1,2 @@
-Buy groeceries
-finish homework
-call friend
-cooking
+assignment2
 shopping
-assignment1
-washing

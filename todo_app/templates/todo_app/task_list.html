@@ -17,7 +17,7 @@
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
-            width: 500px;
+            width: 600px;
         }
         table {
             width: 100%;
@@ -38,10 +38,19 @@
         tr:hover {
             background-color: #f1f1f1;
         }
-        .delete-link {
-            color: red;
+        .action-links a {
+            margin: 0 5px;
             text-decoration: none;
             font-weight: bold;
+        }
+        .edit-link {
+            color: #2196F3;
+        }
+        .edit-link:hover {
+            text-decoration: underline;
+        }
+        .delete-link {
+            color: red;
         }
         .delete-link:hover {
             text-decoration: underline;
@@ -62,19 +71,22 @@
 </head>
 <body>
     <div class="container">
-        <h1> View Task List</h1>
+        <h1> 📋 View Task List</h1>
 
         <table>
             <tr>
                 <th>ID</th>
                 <th>Task</th>
-                <th>Action</th>
+                <th>Actions</th>
             </tr>
             {% for task in tasks %}
             <tr>
                 <td>{{ task.id }}</td>
                 <td>{{ task.title }}</td>
-                <td><a href="{% url 'delete_task' task.id %}" class="delete-link">Delete</a></td>
+                <td class="action-links">
+                    <a href="{% url 'edit_task' task.id %}" class="edit-link">✏️ Edit</a>
+                    <a href="{% url 'delete_task' task.id %}" class="delete-link">🗑 Delete</a>
+                </td>
             </tr>
             {% empty %}
             <tr>
