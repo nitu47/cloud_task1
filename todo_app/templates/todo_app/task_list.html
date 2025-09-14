@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title> Task List</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;   /* center horizontally */
+            align-items: center;       /* center vertically */
+            height: 100vh;             /* full screen height */
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        .container {
+            text-align: center;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
+            width: 500px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+        .delete-link {
+            color: red;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .delete-link:hover {
+            text-decoration: underline;
+        }
+        .add-task {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 8px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+        .add-task:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1> View Task List</h1>
+
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Task</th>
+                <th>Action</th>
+            </tr>
+            {% for task in tasks %}
+            <tr>
+                <td>{{ task.id }}</td>
+                <td>{{ task.title }}</td>
+                <td><a href="{% url 'delete_task' task.id %}" class="delete-link">Delete</a></td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="3">No tasks available.</td>
+            </tr>
+            {% endfor %}
+        </table>
+
+        <a href="{% url 'add_task' %}" class="add-task">➕ Add Task</a>
+    </div>
+</body>
+</html>
